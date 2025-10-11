@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.75.0",
     "lucide-react": "^0.544.0",
     "matter-js": "^0.20.0",
     "ogl": "^1.0.11",

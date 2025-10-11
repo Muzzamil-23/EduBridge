@@ -1,5 +1,4 @@
 import React from "react";
-import FallingChits from "./reactbits/TextAnimations/FallingText/FallingText";
 import FallingText from "./reactbits/TextAnimations/FallingText/FallingText";
 
 
