@@ -14,12 +14,19 @@ export class UniversityService {
         return data
     }
 
-    async getUniversityById(id) {
+    async getUniversityWithPrograms(id) {
         const { data, error } = await this.client
-            .from('universities')
-            .select('*')
-            .eq('id', id)
+            .from("universities")
+            .select(`
+        *,
+        programs (
+        *,
+        university_program_features (*)
+        )
+      `)
+            .eq("uni_id", id)
             .single()
+
         if (error) throw error
         return data
     }

@@ -154,23 +154,5 @@
   }
 }
 
-@layer utilities {
-  @keyframes float-random {
-    0%, 100% {
-      transform: translate(0, 0);
-    }
-    25% {
-      transform: translate(10px, -6px);
-    }
-    50% {
-      transform: translate(-8px, 10px);
-    }
-    75% {
-      transform: translate(6px, -8px);
-    }
-  }
 
-  .animate-float-random {
-    animation: float-random 7s ease-in-out infinite;
-  }
-}
+

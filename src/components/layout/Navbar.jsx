@@ -42,12 +42,13 @@ const Navbar = () => {
       {isOpen && (
         <div className="fixed top-0 left-0 w-full h-screen bg-white flex flex-col items-center justify-center z-50 gap-6 md:hidden transition-all duration-300">
           {links.map((link, idx) => (
-            <div
+            <Link
+              to={`/${link.toLocaleLowerCase()}`}
               key={idx}
               className="text-2xl hover:text-blue-600 cursor-pointer transition-colors duration-200"
             >
               {link}
-            </div>
+            </Link>
           ))}
           <button className="bg-[var(--btn-primary)] mt-4 text-white px-4 py-1 rounded-lg cursor-pointer">
             Sign Up

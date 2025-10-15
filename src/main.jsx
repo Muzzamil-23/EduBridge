@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         element: <ExploreUniversities />
       },
       {
-        path: '/university-details/',
+        path: '/university-details/:id',
         element: <UniDetails />
       }
     ]
