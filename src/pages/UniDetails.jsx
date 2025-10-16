@@ -1,9 +1,10 @@
-import { MapPin, Globe, Mail, Phone, GraduationCap, Building2, Calendar, Award, Star } from "lucide-react";
+import { MapPin, Globe, Mail, Phone, GraduationCap, Building2, Calendar, Award, Star, Bus } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { useUniversityStore } from "../store/useUniversityStore";
 import { useEffect } from "react";
-import universityService from "../supabase/univeristyService";
 import ExpandableCard from "../components/ExpandableCard";
+// import { MapPin, Globe, Mail, Phone, GraduationCap, Building2, Calendar, Award, Star, Bus } from "lucide-react";
+
 
 const UniDetails = () => {
   const { id } = useParams()
@@ -25,7 +26,7 @@ const UniDetails = () => {
   }, [])
 
   console.log(selectedUniversities);
-  
+
 
   const programs = [
     { level: "Undergraduate", name: "BSc Computer Science", duration: "4 years", fee: "$56,169/year" },
@@ -48,9 +49,9 @@ const UniDetails = () => {
       {/* Main Content */}
       <div className="flex-1 p-6 space-y-6 mt-20">
         {/* Header */}
-        <div className="flex gap-8 rounded-2xl border border-gray-200 p-6 shadow-sm">
-          <div className="w-[40%]">
-            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=60" className="rounded-xl" />
+        <div className="flex gap-12 rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <div className="w-auto flex justify-center">
+            <img src={selectedUniversities?.logo_url} className="rounded-xl w-[14rem]" />
           </div>
           <div className="flex flex-col justify-center">
             <h1 className="lg:text-4xl md:text-3xl text-2xl font-extrabold">{selectedUniversities?.university_name}</h1>
@@ -80,10 +81,10 @@ const UniDetails = () => {
                 </div>
               ))}
             </div> */}
-            <ExpandableCard programs={selectedUniversities?.programs || []}/>
+            <ExpandableCard programs={selectedUniversities?.programs || []} />
           </section>
           {/* Overview */}
-          <section className="bg-[#ECE1FF] p-6 rounded-2xl">
+          {/* <section className="bg-[#ECE1FF] p-6 rounded-2xl">
             <h2 className="text-xl font-extrabold mb-8 text-purple-950">Overview</h2>
             <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-4">
               {[
@@ -101,18 +102,57 @@ const UniDetails = () => {
                 </div>
               ))}
             </div>
+          </section> */}
+          <section className="bg-[#ECE1FF] p-6 rounded-2xl">
+            <h2 className="text-xl font-extrabold mb-8 text-purple-950">Overview</h2>
+            <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-4">
+              {[
+                {
+                  icon: <Award className="text-purple-700" size={32} />,
+                  label: "Accreditations",
+                  value: selectedUniversities?.accreditations || "Not specified",
+                },
+                {
+                  icon: <Star className="text-purple-700" size={32} />,
+                  label: "Extracurriculars",
+                  value: selectedUniversities?.extracurriculars || "Not specified",
+                },
+                {
+                  icon: <Building2 className="text-purple-700" size={32} />,
+                  label: "Hostel Facility",
+                  value: selectedUniversities?.has_hostel ? "Available" : "Not Available",
+                },
+                {
+                  icon: <Bus className="text-purple-700" size={32} />,
+                  label: "Transport Facility",
+                  value: selectedUniversities?.has_transport ? "Available" : "Not Available",
+                },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className="rounded-xl p-4 bg-white shadow-sm hover:shadow-md transition"
+                >
+                  <div className="flex items-center space-x-2 text-sm text-gray-600">
+                    {item.icon}
+                    <span className="text-purple-950 font-medium">{item.label}</span>
+                  </div>
+                  <p className="mt-2 text-gray-800 font-medium text-lg">{item.value}</p>
+                </div>
+              ))}
+            </div>
           </section>
+
           {/* Programs Offered */}
         </div>
 
 
         {/* Fee Structure */}
-        <section>
+        {/* <section>
           <h2 className="text-xl font-bold mb-3">Fee Structure</h2>
           <div className="rounded-xl border border-gray-200 p-6 shadow-sm bg-white">
             <div className="space-y-2 text-sm text-gray-700">
 
-              {/* Fee rows */}
+              
               {[
                 ["Tuition (Undergraduate)", "$56,169"],
                 ["Tuition (Graduate)", "$58,746 – $77,868"],
@@ -126,10 +166,10 @@ const UniDetails = () => {
                 </div>
               ))}
 
-              {/* Divider */}
+              
               <div className="border-t border-gray-200 my-2"></div>
 
-              {/* Total row */}
+              
               <div className="flex justify-between items-center pt-2">
                 <span className="font-bold text-lg">Total Estimated Cost</span>
                 <span className="font-extrabold text-2xl text-blue-600">$76,799</span>
@@ -137,14 +177,14 @@ const UniDetails = () => {
 
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Contact & Apply */}
-        <section>
+        <section className="mt-10">
           <h2 className="text-xl font-bold mb-3">Contact & Apply</h2>
           <div className="flex border border-gray-200 p-6 shadow-sm bg-white rounded-2xl">
             <div className="flex items-center rounded-xl w-[70%]">
-              <ul className="space-y-5 text-sm text-gray-700">
+              <ul className="space-y-10 text-sm text-gray-700">
                 <div className="flex items-center">
                   <Mail size={26} className="mr-2 text-blue-500" />
                   <div>
@@ -156,33 +196,33 @@ const UniDetails = () => {
                   <Phone size={26} className="mr-2 text-blue-500" />
                   <div>
                     <span className="text-gray-500">Phone</span>
-                    <li className="text-lg font-medium">+1 (650) 723-2091</li>
+                    <li className="text-lg font-medium">{selectedUniversities?.contact}</li>
                   </div>
                 </div>
                 <div className="flex items-center">
                   <Globe size={26} className="mr-2 text-blue-500" />
                   <div>
                     <span className="text-gray-500">Website</span>
-                    <li className="text-lg font-medium">www.stanford.edu</li>
+                    <li className="text-lg font-medium">{selectedUniversities?.website}</li>
                   </div>
                 </div>
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <MapPin size={26} className="mr-2 text-blue-500" />
                   <div>
                     <span className="text-gray-500">Address</span>
-                    <li className="text-lg font-medium">450 Serra Mall, Stanford, CA 94305</li>
+                    <a href={selectedUniversities?.Location} className="text-lg font-medium">{selectedUniversities?.Location}</a>
                   </div>
-                </div>
+                </div> */}
               </ul>
             </div>
             <div className="rounded-xl p-4 flex flex-col justify-center gap-6 w-[30%]">
-              <button className="w-full bg-blue-600 text-white py-4 rounded-xl hover:bg-blue-700 cursor-pointer">Apply Now</button>
-              <button className="flex text-gray-700 justify-center items-center w-full border border-gray-300 py-4 rounded-xl hover:bg-gray-50 cursor-pointer"><Globe size={20} className="mr-2 text-gray-700" /> Visit Website</button>
-              <button className="flex text-gray-700 justify-center items-center w-full border border-gray-300 py-4 cursor-pointer rounded-xl hover:bg-gray-50"><MapPin size={20} className="mr-2" />
-                View on Map</button>
-              <p className="text-green-900 mt-2 text-center bg-[hsl(var(--neon-lime))] py-3 rounded-xl">
+              <a href={selectedUniversities?.Apply} target="_blank" className="w-full bg-blue-600 text-white py-4 rounded-xl hover:bg-blue-700 cursor-pointer text-center">Apply Now</a>
+              <a href={selectedUniversities?.website} target="_blank" className="flex text-gray-700 text-center justify-center items-center w-full border border-gray-300 py-4 rounded-xl hover:bg-gray-50 cursor-pointer"><Globe size={20} className="mr-2 text-gray-700" /> Visit Website</a>
+              <a href={selectedUniversities?.Location} target="_blank" className="flex text-gray-700 justify-center items-center w-full border border-gray-300 py-4 cursor-pointer rounded-xl hover:bg-gray-50"><MapPin size={20} className="mr-2" />
+                View on Map</a>
+              {/* <p className="text-green-900 mt-2 text-center bg-[hsl(var(--neon-lime))] py-3 rounded-xl">
                 <strong>Application Deadline:</strong> January 5, 2026
-              </p>
+              </p> */}
             </div>
           </div>
         </section>

@@ -9,7 +9,7 @@ const UniCard = ({ uni }) => {
       {/* uni Image */}
       <div className="relative">
         <img
-          src="https://habib.edu.pk/HU-news/wp-content/uploads/2023/02/Feature-Image-1-700x336.jpg"
+          src={uni?.image_url}
           alt={uni?.uni_name}
           className="h-96 w-full object-cover"
         />

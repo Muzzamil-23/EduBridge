@@ -6,6 +6,7 @@ import "./index.css";
 import HeroSection from "./components/HeroSection.jsx";
 import ExploreUniversities from "./pages/ExploreUniversities.jsx";
 import UniDetails from "./pages/UniDetails.jsx";
+import Signup from "./components/Signup.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '/university-details/:id',
         element: <UniDetails />
+      },
+      {
+        path: '/signup',
+        element: <Signup/>
       }
     ]
   }
