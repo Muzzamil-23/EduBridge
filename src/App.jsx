@@ -1,21 +1,34 @@
-import { Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
-import { supabase } from "./supabase/config";
-import { useAuthStore
-  
- } from "./store/useAuthStore";
+import { useAuthStore } from "./store/useAuthStore";
+import Loader from "./components/Loader";
 
 function App() {
-  supabase.auth.onAuthStateChange((_event, session) => {
-    useAuthStore.setState({ user: session?.user || null });
-  });
+  const fetchUser = useAuthStore((state) => state.fetchUser);
+  const loading = useAuthStore((state) => state.loading);
+  const location = useLocation();
+
+  // 🧠 Fetch user session on app load
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+  // Hide Navbar on specific routes
+  const hideNavbar = ["/login", "/signup", "/student-dashboard", "/complete-profile"].includes(location.pathname);
+
+  if(loading) return (
+    <div className="min-h-screen bg-background">
+      <Loader/>
+    </div>
+  )
+
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navbar/>
-      <Outlet /> {/* 👈 this is where Explore, HeroSection, or UniDetails will appear */}
+      {!hideNavbar && <Navbar />}
+      <Outlet/>
     </div>
   );
 }
 
 export default App;
-

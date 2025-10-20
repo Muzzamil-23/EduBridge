@@ -10,7 +10,7 @@ export class AuthService {
     async createAccount({ email, password }) {
         try {
             let { data, error } = await this.client.auth.signUp({ email, password })
-            if(error) throw error
+            if (error) throw error
             return data
         } catch (error) {
             console.error("AuthService :: createAccount :: error", error.message);
@@ -22,7 +22,7 @@ export class AuthService {
     async login({ email, password }) {
         try {
             let { data, error } = await this.client.auth.signInWithPassword({ email, password })
-            if(error) throw error
+            if (error) throw error
             return data
         } catch (error) {
             console.error("AuthService :: login :: error", error.message);
@@ -30,17 +30,27 @@ export class AuthService {
         }
     }
 
-    // get current user session
+    // get current user session safely
     async getCurrentUser() {
         try {
-            const { data: { user }, error } = await this.client.auth.getUser()
-            if(error) throw error
-            return user || null
-        } catch (error) {
-            console.error("AuthService :: getCurrentUser :: error", error.message);
-            throw error
+            // 1️⃣ Check if session exists
+            const { data: { session }, error } = await this.client.auth.getSession();
+            if (error) throw error;
+
+            // 2️⃣ If no session → no logged-in user
+            if (!session) return null;
+
+            // 3️⃣ If session exists, fetch the user
+            const { data: { user }, error: userError } = await this.client.auth.getUser();
+            if (userError) throw userError;
+
+            return user || null;
+        } catch (err) {
+            console.error("AuthService :: getCurrentUser :: error", err.message);
+            return null;
         }
     }
+
 
     async logout() {
         try {
@@ -52,6 +62,8 @@ export class AuthService {
             throw error
         }
     }
+
+
 
 }
 

@@ -7,12 +7,17 @@ import HeroSection from "./components/HeroSection.jsx";
 import ExploreUniversities from "./pages/ExploreUniversities.jsx";
 import UniDetails from "./pages/UniDetails.jsx";
 import Signup from "./components/Signup.jsx";
+import Login from "./components/Login.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import StudentDashboard from "./components/StudentDashboard.jsx";
+import CompleteProfile from "./components/CompleteProfile.jsx";
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
+      // public routes
       {
         path: '/',
         element: <HeroSection />
@@ -32,6 +37,22 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <Signup/>
+      },
+      {
+        path: '/login',
+        element: <Login/>
+      },
+
+      // Protected route (dashboard only after profile completionn)
+      {
+        element: <ProtectedRoute requireProfile={true}/>,
+        children: [{ path: "/student-dashboard", element: <StudentDashboard/>}],
+      },
+
+      // Semi-protected route (for profile completion)
+      {
+        element: <ProtectedRoute requireProfile={false}/>,
+        children: [{ path: "/complete-profile", element: <CompleteProfile/>}],
       }
     ]
   }

@@ -70,7 +70,7 @@ const UniDetails = () => {
         </div>
 
         <div className="flex flex-col gap-6 rounded-2xl border border-gray-200 p-6 shadow-sm">
-          <section className="bg-[#E3FBCC] p-6 rounded-2xl">
+          <section className="bg-[#E3FBCC] p-6 rounded-2xl  max-h-[500px] overflow-y-auto">
             <h2 className="text-xl font-extrabold mb-3">Programs Offered</h2>
             {/* <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-4">
               {selectedUniversities?.programs.map((p, i) => (
