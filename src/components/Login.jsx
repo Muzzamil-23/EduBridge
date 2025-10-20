@@ -160,8 +160,8 @@ const Login = () => {
     try {
       const session = await authService.login(data);
       if (session?.user) {
-        const isCompleted = await profileService.isProfileCompleted(session.user.id)
-        if(isCompleted) navigate("/student-dashboard")
+        const isCompleted = await profileService.isProfileCompleted(session.user.id) 
+        if(isCompleted) navigate("/")
         else navigate("/complete-profile")
       } 
     } catch (error) {

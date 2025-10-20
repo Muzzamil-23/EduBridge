@@ -189,7 +189,7 @@ const UniDetails = () => {
                   <Mail size={26} className="mr-2 text-blue-500" />
                   <div>
                     <span className="text-gray-500">Email</span>
-                    <li className="text-lg font-medium">admissions@stanford.edu</li>
+                    <li className="text-lg font-medium">{selectedUniversities?.email_address}</li>
                   </div>
                 </div>
                 <div className="flex items-center">

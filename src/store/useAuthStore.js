@@ -27,9 +27,9 @@ export const useAuthStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const data = await authService.login({ email, password });
-      set({ user: data.user || null});
+      set({ user: data.user || null });
       await get().fetchUserProfile()
-      set({loading: false})
+      set({ loading: false })
       return data;
     } catch (err) {
       set({ error: err.message, loading: false });
@@ -38,26 +38,64 @@ export const useAuthStore = create((set, get) => ({
   },
 
   // Fetch current user (on refresh or app start)
+  // fetchUser: async () => {
+  //   set({ loading: true, error: null });
+
+  //   try {
+  //     // get current user safely
+  //     const user = await authService.getCurrentUser();
+  //     // console.log("getCurrentUser result:", user);
+
+  //     if (user) {
+  //       set({ user });
+  //       await get().fetchUserProfile();
+  //     } else {
+  //       // if no user session, keep null
+  //       set({ user: null });
+  //     }
+  //   } catch (err) {
+  //     console.error("fetchUser error:", err.message);
+  //     set({ error: err.message, user: null });
+  //   } finally {
+  //     // ✅ loading should only be false after all async logic completes
+  //     set({ loading: false });
+  //   }
+  // },
+
+
+
   fetchUser: async () => {
     set({ loading: true, error: null });
-
     try {
-      // get current user safely
+      // 1️⃣ Get current session user
       const user = await authService.getCurrentUser();
-      // console.log("getCurrentUser result:", user);
 
       if (user) {
         set({ user });
         await get().fetchUserProfile();
       } else {
-        // if no user session, keep null
         set({ user: null });
       }
+
+      // 2️⃣ Subscribe to auth state changes
+      const { data: subscription } = authService.client.auth.onAuthStateChange(
+        async (event, session) => {
+          // console.log("Auth change event:", event);
+          if (session?.user) {
+            set({ user: session.user });
+            await get().fetchUserProfile();
+          } else {
+            set({ user: null, profile: null, isProfileCompleted: false });
+          }
+        }
+      );
+
+      // 3️⃣ Optional cleanup (useful for dev hot reload)
+      return () => subscription.subscription.unsubscribe();
     } catch (err) {
       console.error("fetchUser error:", err.message);
       set({ error: err.message, user: null });
     } finally {
-      // ✅ loading should only be false after all async logic completes
       set({ loading: false });
     }
   },

@@ -18,8 +18,10 @@ const containerVariants = {
 const CompleteProfile = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    const { isProfileCompleted } = useAuthStore.getState(); 
+    const { isProfileCompleted } = useAuthStore.getState();
     if (isProfileCompleted) {
+      localStorage.removeItem("personalData");
+      localStorage.removeItem("academicData");
       navigate("/student-dashboard");
     }
   }, [navigate]);
@@ -141,6 +143,8 @@ const CompleteProfile = () => {
 
 
         useAuthStore.setState({ isProfileComplete: true });
+        localStorage.removeItem("personalData");
+        localStorage.removeItem("academicData");
         navigate("/student-dashboard");
       } catch (err) {
         console.error("❌ Submission error:", err);
