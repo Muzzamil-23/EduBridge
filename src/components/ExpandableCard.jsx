@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { MousePointerClick } from "lucide-react";
 
-export default function ExpandableCard({ programs = [] }) {
+export default function ExpandableCard({ programs = [], showMatchingScore = false }) {
   const [active, setActive] = useState(null);
   const ref = useRef(null);
   const uid = useId();
@@ -125,30 +125,73 @@ export default function ExpandableCard({ programs = [] }) {
               style={{ opacity: isActive ? 0 : 1 }}
               className="p-4 bg-white hover:bg-gray-50 rounded-xl cursor-pointer border border-gray-200 hover:shadow-md transition-shadow flex justify-between"
             >
-              <motion.div>
-                <motion.h3
-                  layoutId={`title-${card.id}-${uid}`}
-                  className="font-semibold text-lg text-gray-800 mb-2"
-                >
-                  {card.program_name}
-                </motion.h3>
-                <motion.span
-                  layoutId={`description-${card.id}-${uid}`}
-                  className="text-white text-sm bg-[#B692F6] px-2 py-1 rounded-2xl"
-                >
-                  Undergraduate
-                </motion.span>
-              </motion.div>
-              <motion.div className="flex items-center gap-4">
-                <MousePointerClick size={32} className="text-purple-500" />
-                <motion.p className="text-gray-600 text-sm">
-                  Click to see details
-                </motion.p>
-              </motion.div>
+
+              {card.university_name ? (
+                <motion.div className="w-[90%]">
+                  <motion.h3
+                    layoutId={`title-${card.id}-${uid}`}
+                    className="flex flex-col font-semibold text-lg text-gray-800 mb-2 gap-2"
+                  >
+                    <span className="text-lg font-bold text-gray-800">{card.university_name}</span>
+                    <span className="text-[1rem]">{card.program_name}</span>
+                  </motion.h3>
+                  {/* Matching Score */}
+                  {showMatchingScore && card.similarity_score !== undefined && (
+                    <div className="mt-1 mb-4">
+                      <span className="text-purple-600 font-medium text-sm">
+                        Matching Score: {Math.round(card.similarity_score * 100)}%
+                      </span>
+                      <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
+                        <div
+                          className="bg-purple-500 h-2 rounded-full"
+                          style={{ width: `${Math.round(card.similarity_score * 100)}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  <motion.span
+                    layoutId={`description-${card.id}-${uid}`}
+                    className="text-white text-sm bg-[#B692F6] px-2 py-1 rounded-2xl"
+                  >
+                    Undergraduate
+                  </motion.span>
+                </motion.div>
+              ) : (
+                <motion.div>
+                  <motion.h3
+                    layoutId={`title-${card.id}-${uid}`}
+                    className="font-bold text-lg text-gray-800 mb-2"
+                  >
+                    <span className="text-lg font-bold">{card.program_name}</span>
+                  </motion.h3>
+                  <motion.span
+                    layoutId={`description-${card.id}-${uid}`}
+                    className="text-white text-sm bg-[#B692F6] px-2 py-1 rounded-2xl"
+                  >
+                    Undergraduate
+                  </motion.span>
+                </motion.div>
+              )}
+
+              {
+                card.university_name ? (
+                  <motion.div className="flex items-center gap-4" title="See Details">
+                    <MousePointerClick size={32} className="text-purple-500" />
+                  </motion.div>
+                ) : (
+                  <motion.div className="flex items-center gap-4">
+                    <MousePointerClick size={32} className="text-purple-500" />
+                    <motion.p className="text-gray-600 text-sm">
+                      Click to see details
+                    </motion.p>
+                  </motion.div>
+                )
+              }
+
             </motion.div>
           );
         })}
-      </ul>
+      </ul >
     </>
   );
 }

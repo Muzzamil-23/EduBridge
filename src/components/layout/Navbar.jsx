@@ -5,13 +5,13 @@ import { useAuthStore } from "../../store/useAuthStore"; // import your auth sto
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const links = ["Home", "Explore", "Pricing", "About", "Contact"];
+  const links = ["Home", "Explore", "About"];
   const navigate = useNavigate();
 
   const { user, logout } = useAuthStore();
 
   // Add "Student Dashboard" if user is logged in
-  const navLinks = user ? [...links, "Dashboard"] : links;
+  const navLinks = user ? [...links, "Student Dashboard"] : links;
 
   const handleAuthClick = async () => {
     if (user) {
@@ -23,7 +23,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full fixed top-0 left-0 z-50 px-6 py-4 flex items-center justify-between bg-transparent backdrop-blur-md transition-all duration-300">
+    <nav className="w-full fixed top-0 left-0 z-60 px-6 py-4 flex items-center justify-between bg-transparent backdrop-blur-md transition-all duration-300">
       {/* Logo */}
       <div
         className="text-2xl font-bold cursor-pointer"
@@ -51,7 +51,7 @@ const Navbar = () => {
         onClick={handleAuthClick}
         className="hidden md:block bg-[var(--btn-primary)] text-white px-4 py-1 rounded-lg cursor-pointer"
       >
-        {user ? "Logout" : "Sign Up"}
+        {user ? "Logout" : "Login"}
       </button>
 
       {/* Mobile Menu Button */}

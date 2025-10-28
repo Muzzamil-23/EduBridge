@@ -18,8 +18,8 @@ const UniCard = ({ uni }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
 
         {/* Location badge */}
-        <div className="absolute top-4 left-4 bg-[#E3FBCC] text-sm font-semibold px-4 py-1 rounded-full shadow-md">
-          {uni?.city || "Unknown"}
+        <div className="absolute top-4 left-4 text-white bg-green-500 text-sm font-semibold px-4 py-1 rounded-full shadow-md">
+          {uni?.type || "Unknown"}
         </div>
       </div>
 

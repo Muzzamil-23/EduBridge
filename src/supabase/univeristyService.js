@@ -30,6 +30,18 @@ export class UniversityService {
         if (error) throw error
         return data
     }
+
+    async getAllScholarships() {
+        const { data, error } = await this.client
+            .from('scholarships')
+            .select('*')
+            .eq('active', true) // optional, if you only want active ones
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        return data;
+    }
+
 }
 
 const universityService = new UniversityService()

@@ -7,6 +7,9 @@ import { useAuthStore } from "../store/useAuthStore";
 import profileService from "../supabase/profileService";
 import { personalSchema, academicSchema } from "../validations/profileSchema";
 import Dropdown from "./Dropdown";
+import { useDashboardStore } from "../store/useDashboardStore";
+
+// const { user } = useAuthStore();
 
 
 const containerVariants = {
@@ -17,6 +20,7 @@ const containerVariants = {
 
 const CompleteProfile = () => {
   const navigate = useNavigate();
+  const { fetchRecommendations } = useDashboardStore();
   useEffect(() => {
     const { isProfileCompleted } = useAuthStore.getState();
     if (isProfileCompleted) {
@@ -142,10 +146,12 @@ const CompleteProfile = () => {
         await profileService.upsertAcademicData({ ...academicData, user_id: user.id });
 
 
-        useAuthStore.setState({ isProfileComplete: true });
+        useAuthStore.setState({ isProfileCompleted: true });
         localStorage.removeItem("personalData");
         localStorage.removeItem("academicData");
+        await fetchRecommendations(user.id)
         navigate("/student-dashboard");
+
       } catch (err) {
         console.error("❌ Submission error:", err);
         setError(err.message || "Failed to complete profile.");
@@ -179,8 +185,7 @@ const CompleteProfile = () => {
     "Business & Management",
     "Medical & Health Sciences",
     "Arts & Humanities",
-    "Law & Social Sciences",
-    "Natural Sciences",
+    "Law & Legal Studies",
   ];
 
   return (

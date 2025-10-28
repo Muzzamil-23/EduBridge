@@ -15,11 +15,11 @@ export const academicSchema = z.object({
   preferred_program_group: z.enum(
     [
       "Computer Science / IT",
-      "Engineering",
-      "Business / Management",
-      "Medical / Health Sciences",
-      "Social Sciences / Arts",
-      "Other",
+      "Engineering & Technology",
+      "Business & Management",
+      "Medical & Health Sciences",
+      "Arts & Humanities",
+      "Law & Legal Studies",
     ],
     { required_error: "Program group required" }
   ),
