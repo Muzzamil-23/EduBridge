@@ -1,77 +1,9 @@
-// import { useEffect } from "react";
-// import { Outlet, useLocation } from "react-router-dom";
-// import Navbar from "./components/layout/Navbar";
-// import { useAuthStore } from "./store/useAuthStore";
-// import { useUniversityStore } from "./store/useUniversityStore";
-// import { useDashboardStore } from "./store/useDashboardStore";
-// import Loader from "./components/Loader";
-
-// function App() {
-//   const fetchUser = useAuthStore((state) => state.fetchUser);
-//   const user = useAuthStore((state) => state.user);
-//   const authLoading = useAuthStore((state) => state.loading);
-
-//   const fetchUniversities = useUniversityStore((state) => state.fetchUniversities);
-//   const universities = useUniversityStore((state) => state.universities);
-
-//   const fetchRecommendations = useDashboardStore((state) => state.fetchRecommendations);
-//   const recommendations = useDashboardStore((state) => state.recommendations);
-//   const recError = useDashboardStore((state) => state.error);
-
-//   const location = useLocation();
-
-//   // 1️⃣ Fetch user session on app load
-//   useEffect(() => {
-//     fetchUser();
-//   }, [fetchUser]);
-
-//   // 2️⃣ Fetch all universities on app mount (for store)
-//   useEffect(() => {
-//     fetchUniversities();
-//   }, [fetchUniversities]);
-
-//   // 3️⃣ Fetch recommendations whenever user exists and universities are loaded
-//   useEffect(() => {
-//     if (user?.id && universities.length > 0) {
-//       fetchRecommendations(user.id);
-//     }
-//   }, [user, universities, fetchRecommendations]);
-
-//   // 4️⃣ Log recommendations and any errors
-//   useEffect(() => {
-//     console.log("Recommendations from backend/store:", recommendations);
-//     if (recError) console.error("Error fetching recommendations:", recError);
-//   }, [recommendations, recError]);
-
-//   const hideNavbar = ["/login", "/signup", "/student-dashboard", "/complete-profile"].includes(location.pathname);
-
-//   if (authLoading) return (
-//     <div className="min-h-screen bg-background">
-//       <Loader />
-//     </div>
-//   );
-
-//   return (
-//     <div className="min-h-screen bg-background text-foreground">
-//       {!hideNavbar && <Navbar />}
-//       <Outlet />
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-
-
-
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import { useAuthStore } from "./store/useAuthStore";
 import { useUniversityStore } from "./store/useUniversityStore";
 import { useDashboardStore } from "./store/useDashboardStore";
-import { supabase } from "./supabase/config";
 import Loader from "./components/Loader";
 
 function App() {
@@ -153,7 +85,7 @@ function App() {
 
   // 4️⃣ Debug logger
   useEffect(() => {
-    console.log("🧩 Recommendations in store:", recommendations);
+    // console.log("🧩 Recommendations in store:", recommendations);
     if (recError) console.error("Error fetching recommendations:", recError);
   }, [recommendations, recError]);
 

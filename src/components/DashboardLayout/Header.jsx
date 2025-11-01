@@ -3,7 +3,7 @@ import { useAuthStore } from '../../store/useAuthStore'
 
 const Header = () => {
   const { profile } = useAuthStore()
-  console.log(profile);
+  // console.log(profile);
 
   return (
     <div className='flex items-center gap-2'>

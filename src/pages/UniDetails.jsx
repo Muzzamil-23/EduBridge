@@ -1,23 +1,13 @@
-import { MapPin, Globe, Mail, Phone, GraduationCap, Building2, Calendar, Award, Star, Bus } from "lucide-react";
+import { MapPin, Globe, Mail, Phone, Building2, Award, Star, Bus } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { useUniversityStore } from "../store/useUniversityStore";
 import { useEffect } from "react";
 import ExpandableCard from "../components/ExpandableCard";
-// import { MapPin, Globe, Mail, Phone, GraduationCap, Building2, Calendar, Award, Star, Bus } from "lucide-react";
-
 
 const UniDetails = () => {
   const { id } = useParams()
   const { selectedUniversities, fetchUniversityDetails, loading, error } = useUniversityStore()
 
-
-
-
-  // useEffect(() => {
-  //   if (id) {
-  //     fetchUniversityDetails(id)  
-  //   }
-  // }, [])
 
   useEffect(() => {
     if (id) {
@@ -25,7 +15,7 @@ const UniDetails = () => {
     }
   }, [id, fetchUniversityDetails])
 
-  console.log(selectedUniversities);
+  // console.log(selectedUniversities);
 
 
   const programs = [
@@ -40,8 +30,6 @@ const UniDetails = () => {
     { name: "Michael Chen", date: "3 months ago", rating: 5, text: "The entrepreneurial culture and Silicon Valley connections are unmatched." },
     { name: "Emily Rodriguez", date: "4 months ago", rating: 4, text: "Great programs but very competitive. The campus is beautiful and facilities are top-notch." },
   ];
-
-
 
 
   return (
