@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 .env
+backend/fastapi_model/venv/
+backend/fastapi_model/__pycache__/
+backend/fastapi_model/*.pyc
+backend/fastapi_model/.env
+
 
 # Editor directories and files
 .vscode/*
